@@ -1,7 +1,7 @@
 import unittest
 from booking_system import \
     BookingSystem, Personnel, AvailabilityPeriod, \
-    User, Appointment, AppointmentType, Booking
+    User, Appointment, AppointmentType, Booking, PersonnelType
 from datetime import datetime
 
 
@@ -89,7 +89,7 @@ class TestBookingSystem(unittest.TestCase):
         system.add_new_personnel(personnel)
 
         appointment = Appointment(
-            "tour", [personnel], ["microphone"]
+            AppointmentType.tour, [personnel], ["microphone"]
         )
         system.add_new_appointment(appointment)
 
@@ -109,7 +109,7 @@ class TestBookingSystem(unittest.TestCase):
 
 def joe():
     return Personnel(
-                "teacher", "Joe",
+                PersonnelType.teacher, "Joe",
                 [AvailabilityPeriod(datetime(2020, 2, 2, 10), datetime(2020, 2, 2, 13)),
                  AvailabilityPeriod(datetime(2020, 2, 4, 14), datetime(2020, 2, 4, 18))]
             )

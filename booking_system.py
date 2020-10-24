@@ -1,5 +1,6 @@
-from enum import Enum
+from datetime import datetime
 from typing import List
+from enum import Enum
 
 
 class User(Enum):
@@ -7,39 +8,55 @@ class User(Enum):
     client = 2
 
 
+class PersonnelType:
+    teacher = 1
+    guide = 2
+
+
 class AppointmentType:
     tour = 1
     workshop = 2
 
 
+class AvailabilityPeriod:
+    def __init__(self,
+                 from_date: datetime,
+                 to_date: datetime):
+        self.from_date = from_date
+        self.to_date = to_date
+
+
 class Personnel:
-    def __init__(self, personnel_type, name, availability_dates):
+    def __init__(self,
+                 personnel_type: PersonnelType,
+                 name: str,
+                 availability_dates: List[AvailabilityPeriod]):
         self.personnel_type = personnel_type
         self.name = name
         self.availability_dates = availability_dates
 
 
-class AvailabilityPeriod:
-    def __init__(self, from_date, to_date):
-        self.from_date = from_date
-        self.to_date = to_date
-
-
 class Appointment:
-    def __init__(self, appointment_type, required_personnel, required_resources):
+    def __init__(self,
+                 appointment_type: AppointmentType,
+                 required_personnel: List[Personnel],
+                 required_resources: List[str]):
         self.appointment_type = appointment_type
         self.required_personnel = required_personnel
         self.required_resources = required_resources
 
 
 class Booking:
-    def __init__(self, appointment, special_request, time):
+    def __init__(self,
+                 appointment: Appointment,
+                 special_request: str,
+                 time: datetime):
         self.appointment = appointment
         self.special_request = special_request
         self.time = time
         self.is_approved = False if special_request is not None else True
 
-    def approve(self):
+    def approve(self) -> None:
         self.is_approved = True
 
 
@@ -47,7 +64,7 @@ class BookingSystem:
     current_user: User = None
     personnel: List[Personnel] = []
     appointments: List[Appointment] = []
-    bookings = []
+    bookings: List[Booking] = []
 
     def add_new_appointment(self,
                             appointment: Appointment) -> None:
@@ -67,5 +84,5 @@ class BookingSystem:
                          user: User) -> None:
         self.current_user = user
 
-    def get_pending_bookings(self):
+    def get_pending_bookings(self) -> List[Booking]:
         return [booking for booking in self.bookings if booking.is_approved is False]
