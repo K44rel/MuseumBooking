@@ -40,7 +40,7 @@ class Booking:
         self.is_approved = False if special_request is not None else True
 
     def approve(self):
-        pass
+        self.is_approved = True
 
 
 class BookingSystem:
@@ -68,4 +68,4 @@ class BookingSystem:
         self.current_user = user
 
     def get_pending_bookings(self):
-        pass
+        return [booking for booking in self.bookings if booking.is_approved is False]
