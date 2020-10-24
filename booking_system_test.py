@@ -1,5 +1,5 @@
 import unittest
-from booking_system import BookingSystem, Personnel, AvailabilityPeriod, User, Appointment
+from booking_system import BookingSystem, Personnel, AvailabilityPeriod, User, Appointment, AppointmentType
 from datetime import datetime
 
 
@@ -54,15 +54,15 @@ class TestBookingSystem(unittest.TestCase):
         system.add_new_personnel(personnel)
 
         appointment = Appointment(
-            "tour",  # Type of the appointment
-            [personnel],  # Personnel required for the appointment
-            ["microphone"]  # Resources required for the appointment
+            AppointmentType.tour,   # Type of the appointment
+            [personnel],            # Personnel required for the appointment
+            ["microphone"]          # Resources required for the appointment
         )
 
         system.add_new_appointment(appointment)
 
         # Check if new appointment was added
-        self.assertIn(appointment, system.appointment_types)
+        self.assertIn(appointment, system.appointments)
 
 
 def joe():

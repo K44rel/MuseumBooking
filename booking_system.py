@@ -7,6 +7,11 @@ class User(Enum):
     client = 2
 
 
+class AppointmentType:
+    tour = 1
+    workshop = 2
+
+
 class Personnel:
     def __init__(self, personnel_type, name, availability_dates):
         self.personnel_type = personnel_type
@@ -30,11 +35,15 @@ class Appointment:
 class BookingSystem:
     current_user: User = None
     personnel: List[Personnel] = []
-    appointment_types = []
+    appointments: List[Appointment] = []
     bookings = []
 
-    def add_new_appointment(self, appointment):
-        self.appointment_types.append(appointment)
+    def add_new_appointment(self,
+                            appointment: Appointment) -> None:
+        if self.current_user == User.administrator:
+            self.appointments.append(appointment)
+        else:
+            raise PermissionError(f"User with role {self.current_user} can not create new appointment types.")
 
     def add_new_personnel(self,
                           personnel: Personnel) -> None:
