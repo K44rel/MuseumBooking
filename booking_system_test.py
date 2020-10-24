@@ -1,5 +1,5 @@
 import unittest
-from booking_system import BookingSystem, Personnel, AvailabilityPeriod
+from booking_system import BookingSystem, Personnel, AvailabilityPeriod, User
 from datetime import datetime
 
 
@@ -22,7 +22,7 @@ class TestBookingSystem(unittest.TestCase):
         system = BookingSystem()
 
         # Current user has to be administrator
-        system.set_current_user("Administrator")
+        system.set_current_user(User.administrator)
 
         personnel = joe()
 
