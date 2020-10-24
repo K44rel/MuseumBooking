@@ -34,7 +34,7 @@ class BookingSystem:
     bookings = []
 
     def add_new_appointment(self, appointment):
-        pass
+        self.appointment_types.append(appointment)
 
     def add_new_personnel(self,
                           personnel: Personnel) -> None:
