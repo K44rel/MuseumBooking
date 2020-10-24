@@ -32,6 +32,17 @@ class Appointment:
         self.required_resources = required_resources
 
 
+class Booking:
+    def __init__(self, appointment, special_request, time):
+        self.appointment = appointment
+        self.special_request = special_request
+        self.time = time
+        self.is_approved = False if special_request is not None else True
+
+    def approve(self):
+        pass
+
+
 class BookingSystem:
     current_user: User = None
     personnel: List[Personnel] = []
@@ -55,3 +66,6 @@ class BookingSystem:
     def set_current_user(self,
                          user: User) -> None:
         self.current_user = user
+
+    def get_pending_bookings(self):
+        pass

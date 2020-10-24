@@ -1,5 +1,7 @@
 import unittest
-from booking_system import BookingSystem, Personnel, AvailabilityPeriod, User, Appointment, AppointmentType
+from booking_system import \
+    BookingSystem, Personnel, AvailabilityPeriod, \
+    User, Appointment, AppointmentType, Booking
 from datetime import datetime
 
 
@@ -63,6 +65,46 @@ class TestBookingSystem(unittest.TestCase):
 
         # Check if new appointment was added
         self.assertIn(appointment, system.appointments)
+
+    """
+    Scenario: Administrator approves booking
+
+        Some bookings contain special requests by the clients.
+        The administrator needs to approve these bookings manually.
+
+        Given the administrator is signed in to the management view
+        And there exists a pending booking with a special request attached
+        When administrator approves the booking
+        Then new appointment is created
+        And the client is notified of the approval
+    """
+    def test_admin_approves_booking(self):
+        system = BookingSystem()
+
+        # Current user has to be administrator
+        system.set_current_user(User.administrator)
+
+        # Set up dummy booking to approve
+        personnel = joe()
+        system.add_new_personnel(personnel)
+
+        appointment = Appointment(
+            "tour", [personnel], ["microphone"]
+        )
+        system.add_new_appointment(appointment)
+
+        system.bookings.append(
+            Booking(
+                appointment,
+                "special request description",
+                datetime(2020, 2, 2, 10)
+            )
+        )
+
+        booking = system.get_pending_bookings()[0]
+        booking.approve()
+
+        self.assertTrue(booking.is_approved)
 
 
 def joe():
