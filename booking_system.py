@@ -20,11 +20,21 @@ class AvailabilityPeriod:
         self.to_date = to_date
 
 
+class Appointment:
+    def __init__(self, appointment_type, required_personnel, required_resources):
+        self.appointment_type = appointment_type
+        self.required_personnel = required_personnel
+        self.required_resources = required_resources
+
+
 class BookingSystem:
     current_user: User = None
     personnel: List[Personnel] = []
     appointment_types = []
     bookings = []
+
+    def add_new_appointment(self, appointment):
+        pass
 
     def add_new_personnel(self,
                           personnel: Personnel) -> None:
