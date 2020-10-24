@@ -5,10 +5,10 @@ class BookingSystem:
     bookings = []
 
     def add_new_personnel(self, personnel):
-        pass
+        self.personnel.append(personnel)
 
     def set_current_user(self, user):
-        pass
+        self.current_user = user
 
 
 class Personnel:
